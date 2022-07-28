@@ -51,20 +51,29 @@ col1, col2 = st.columns([1, 1])
 col1.header("Make pie chart analytics")
 
 # selectbox to choose column of interest
-option = col1.selectbox(
+pie_option = col1.selectbox(
     'Create a pie chart for a column:',
      data.columns)
 
-pie = data.groupby(option)[option].count()
+# piechart features
+pie_features = col1.checkbox('Display percentage')
 
-col1.subheader('Pie chart for ' + option)
+# make the piechart
+col1.subheader('Pie chart for ' + pie_option)
 
-def pieChart():
+def pieChart(option,features):
+    # Display percentage? 
+    if features:
+        pct='%.1f' 
+    else:
+        pct = ''
+    # build chart    
+    pie = data.groupby(option)[option].count()
     fig = plt.figure(figsize=(4,4))
-    plt.pie(pie, labels=pie.index,autopct='%.1f',)
+    plt.pie(pie, labels=pie.index,autopct=pct)
     col1.pyplot(fig)
     
-pieChart()
+pieChart(pie_option,pie_features)
 
 
 ### keyword bar graph 
@@ -91,7 +100,10 @@ kw_df = pd.DataFrame.from_dict(kw_dict, orient='index')
 kw_df.columns = ['count']
 
 # slide to display certain number of keywords
-x = col2.slider('Display the top ___ keywords',min_value=1,max_value=20,value=10)
+kw_number = col2.slider('Display the top ___ keywords',min_value=1,max_value=20,value=10)
+
+# display count?
+display_count = col2.checkbox('Display keyword counts')
 
 # bar graph of top keywords   
 def keywords(x):
@@ -99,10 +111,8 @@ def keywords(x):
     fig = plt.figure(figsize=(4,4))
     bar = plt.bar(kw_counted.index,height = kw_counted['count'])
     plt.xticks(rotation='vertical')
-    plt.bar_label(bar)
+    if display_count: 
+        plt.bar_label(bar)
     col2.pyplot(fig)
     
-keywords(x)
-
-
-
+keywords(kw_number)
