@@ -8,7 +8,6 @@ Created on Thu Jul 21 16:40:34 2022
 import streamlit as st
 import pandas as pd
 import numpy as np
-import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 
 ### setting matplotlib font sizes
