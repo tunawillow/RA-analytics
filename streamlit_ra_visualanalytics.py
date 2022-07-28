@@ -49,11 +49,10 @@ def keywords(x):
     
 st.title('LEXEO Regulatory Affairs: Correspondence Database')
 
-st.subheader('Regulatory Correspondence')
 st.write("Find the original excel file [here](https://lexeotx.sharepoint.com/:x:/r/sites/RegulatoryGroup/RG%20Administrative/Tina/Correspondence%20database.xlsx?d=wbd8eb268ac6f4de09b648ec42417b939&csf=1&web=1&e=J1RrNz).")
 '''
 This site is better used to make visual analytics. To look at specific correspondence, it is recommended to access the original excel file. 
-However, you can make basic searches here! To search for a keyword, click on cell in the table and use CMD+F to bring up the search bar :)
+However, you can make basic searches here! To search for a keyword, click on cell in the table and use Ctrl+F to bring up the search bar :)
 '''
 
 ### upload database file
