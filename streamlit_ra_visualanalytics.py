@@ -58,13 +58,13 @@ However, you can make basic searches here! To search for a keyword, click on cel
 '''
 
 ### upload database file
-file = st.file_uploader('Download the database excel. Convert it to csv. Upload the database csv file here.')
+file = st.file_uploader('Upload the database Excel file here.')
 
 if file is not None:
     # Create a text element and let the reader know the data is loading.
     data_load_state = st.text('Loading data...')
     # Load 10,000 rows of data into the dataframe.
-    data = pd.read_csv(file, usecols=[0,1,2,3,4,5,6,7,8,9,10])
+    data = pd.read_excel(file, usecols=[0,1,2,3,4,5,6,7,8,9,10])
     # Notify the reader that the data was successfully loaded.
     data_load_state.text("Done!")
     st.write(data)
