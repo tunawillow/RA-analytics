@@ -15,12 +15,12 @@ SMALL_SIZE = 8
 MEDIUM_SIZE = 10
 BIGGER_SIZE = 12
 
-plt.rc('font', size=SMALL_SIZE)          # controls default text sizes
+plt.rc('font', size=MEDIUM_SIZE)          # controls default text sizes
 plt.rc('axes', titlesize=SMALL_SIZE)     # fontsize of the axes title
 plt.rc('axes', labelsize=MEDIUM_SIZE)    # fontsize of the x and y labels
-plt.rc('xtick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
-plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
-plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
+plt.rc('xtick', labelsize=MEDIUM_SIZE)    # fontsize of the tick labels
+plt.rc('ytick', labelsize=MEDIUM_SIZE)    # fontsize of the tick labels
+plt.rc('legend', fontsize=MEDIUM_SIZE)    # legend fontsize
 plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
 ### define functions
@@ -40,13 +40,15 @@ def pieChart(option,features):
 def keywords(x):
     kw_counted = kw_df.sort_values(by = ['count'],ascending=False).head(x)
     fig = plt.figure(figsize=(4,4))
-    bar = plt.bar(kw_counted.index,height = kw_counted['count'])
-    plt.xticks(rotation='vertical')
+    bar = plt.barh(kw_counted.index, width = kw_counted['count']) # horizontal bar graph
+    ax = plt.gca()
+    ax.invert_yaxis() # most frequent keyword is on top
+    
     if display_count: 
         plt.bar_label(bar)
     col2.pyplot(fig)
     
-    
+
 st.title('LEXEO Regulatory Affairs: Correspondence Database')
 
 st.write("Find the original excel file [here](https://lexeotx.sharepoint.com/:x:/r/sites/RegulatoryGroup/RG%20Administrative/Tina/Correspondence%20database.xlsx?d=wbd8eb268ac6f4de09b648ec42417b939&csf=1&web=1&e=J1RrNz).")
@@ -56,19 +58,19 @@ However, you can make basic searches here! To search for a keyword, click on cel
 '''
 
 ### upload database file
-file = st.file_uploader('Upload the database csv file here.')
+file = st.file_uploader('Download the database excel. Convert it to csv. Upload the database csv file here.')
 
 if file is not None:
     # Create a text element and let the reader know the data is loading.
     data_load_state = st.text('Loading data...')
     # Load 10,000 rows of data into the dataframe.
-    data = pd.read_csv(file)
+    data = pd.read_csv(file, usecols=[0,1,2,3,4,5,6,7,8,9,10])
     # Notify the reader that the data was successfully loaded.
-    data_load_state.text("Done! (using st.cache)")
+    data_load_state.text("Done!")
     st.write(data)
 
     ### format page into 2 columns - 1 for pie chart, 1 for keywords 
-    col1, col2 = st.columns([1, 1])
+    col1, col2 = st.columns([1, 1.3])
     
     ### create piechart for column of interest  
     col1.header("Make pie chart analytics")
